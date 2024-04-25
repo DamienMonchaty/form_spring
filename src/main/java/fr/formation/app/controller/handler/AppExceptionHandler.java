@@ -24,8 +24,8 @@ public class AppExceptionHandler {
 		return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
 	}
 	
-	@ExceptionHandler(Exception.class)
-	public ResponseEntity<?> handleTechnicalException(Exception e) {
-		return new ResponseEntity<>("Error 500" + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-	}
+//	@ExceptionHandler(Exception.class)
+//	public ResponseEntity<?> handleTechnicalException(Exception e) {
+//		return new ResponseEntity<>("Error 500" + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+//	}
 }

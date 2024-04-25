@@ -47,8 +47,13 @@ public class PersonService implements IPersonService {
 
 	@Override
 	public boolean deleteById(int id) {	
-		personRepository.deleteById(id);
-		return true;
+		Optional<Person> personOptional = personRepository.findById(id);
+	    if (personOptional.isPresent()) {
+	        personRepository.deleteById(id);
+	        return true;
+	    } else {
+	    	throw new TechnicalException("Technical error NO ID !!!");	
+	    }
 	}
 
 	@Override
@@ -65,10 +70,5 @@ public class PersonService implements IPersonService {
     private Person convertToEntity(PersonDto personDTO) {
         return modelMapper.map(personDTO, Person.class);
     }
-
-	@Override
-	public void doSomething() {
-		throw new TechnicalException("Technical error");	
-	}
 
 }

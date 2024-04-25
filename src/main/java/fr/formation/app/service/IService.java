@@ -9,5 +9,4 @@ public interface IService<T> {
 	T saveOrUpdate(T o);
 	Optional<T> getById(int id);
 	boolean deleteById(int id);
-	void doSomething();
 }
