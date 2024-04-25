@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Get Persons</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+
+<div id="persons"></div>
+
+<script>
+    $(document).ready(function() {
+        // Faire une requête GET vers l'endpoint /persons
+        $.ajax({
+            url: "http://localhost:8080/api/v1/persons", // Assurez-vous de changer l'URL en fonction de votre environnement
+            type: "GET",
+            success: function(response) {
+                // Manipuler la réponse JSON
+                var personsHtml = "<h2>Persons</h2><ul>";
+                response.forEach(function(person) {
+                    personsHtml += "<li>" + person.firstName + " " + person.lastName + " (Age: " + person.age + ")</li>";
+                });
+                personsHtml += "</ul>";
+                $("#persons").html(personsHtml);
+            },
+            error: function(xhr, status, error) {
+                // Gérer les erreurs
+                console.error("Une erreur s'est produite lors de la récupération des personnes:", status, error);
+                $("#persons").html("<p>Une erreur s'est produite lors de la récupération des personnes.</p>");
+            }
+        });
+    });
+</script>
+
+</body>
+</html>
