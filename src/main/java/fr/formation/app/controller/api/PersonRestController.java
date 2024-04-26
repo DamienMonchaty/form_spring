@@ -65,7 +65,7 @@ public class PersonRestController {
 
 	// DELETE http://localhost:8080/api/v1/persons/1
 	@DeleteMapping(value = "/{id}")
-	public ResponseEntity<?> deletePersonne(@PathVariable("id") int id) {
+	public ResponseEntity<?> deletePerson(@PathVariable("id") int id) {
 		PersonDto personToDelete = personService.getById(id)
 				.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Person not found with id : " + id));
 		personService.deleteById(personToDelete.getId());
