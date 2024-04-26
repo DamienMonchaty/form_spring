@@ -12,6 +12,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -27,6 +28,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import fr.formation.app.dto.PersonDto;
+import fr.formation.app.model.Person;
 import fr.formation.app.service.ICarService;
 import fr.formation.app.service.IPersonService;
 
@@ -41,6 +43,13 @@ public class PersonRestControllerTest {
     
     @MockBean
     private ICarService carService;
+    
+    private ObjectMapper objectMapper;
+    
+	@BeforeEach
+	void setup(){
+		objectMapper = new ObjectMapper();
+	}
 
     @Test
     public void testGetPersons() throws Exception {
@@ -56,15 +65,11 @@ public class PersonRestControllerTest {
 		RequestBuilder requestBuilder = MockMvcRequestBuilders.get(URI).accept(MediaType.APPLICATION_JSON);
 
 		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
-
-		String expectedJson = this.mapToJson(personDtoList);
+		
+		String expectedJson = objectMapper.writeValueAsString(personDtoList);
 		String outputInJson = result.getResponse().getContentAsString();
 
 		assertThat(outputInJson).isEqualTo(expectedJson);
     }
     
-    private String mapToJson(Object object) throws JsonProcessingException {
-		ObjectMapper objectMapper = new ObjectMapper();
-		return objectMapper.writeValueAsString(object);
-	}
 }
